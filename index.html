@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R.I.Z.A.L.</title>
+    
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
+    <link rel="icon" href="./src/assets/icon.png" type="image/png">
+    <link rel="stylesheet" href="./src/css/style.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+</head>
+<body>
+    <div class="background-wrapper">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    
+    <div class="app-container">
+        
+        <div class="header-logos" id="logoContainer">
+            <img src="./src/assets/icon.png" alt="Logo 1" class="logo-icon">
+            <img src="./src/assets/jrmsu_icon.png" alt="Logo 2" class="logo-icon"> 
+        </div>
+
+        <section id="slide-1" class="slide active">
+            <div class="content">
+                <h1>Welcome, <br> <span class="highlight">Illustrados</span></h1>
+                <p class="description">
+                    <span class="highlight">R</span>ecord & <span class="highlight">I</span>ntegrated <span class="highlight">Z</span>one for <span class="highlight">A</span>ttendance & <span class="highlight">L</span>ogging (R.I.Z.A.L.) is designed to simplify your daily attendance monitoring at JRMSU. Track your records and stay informed.
+                </p>
+                <button class="btn-primary" onclick="nextSlide(2)">Next</button>
+            </div>
+        </section>
+
+        <section id="slide-2" class="slide">
+            <div class="content">
+                <h1>Do you <br> <span class="highlight">Agree?</span></h1>
+                <p class="description">
+                    By continuing, you confirm that you have read, understood, and agreed to the
+                    <a href="#" onclick="document.getElementById('pdfViewer').style.display='block'">
+                    Terms of Service</a> and <a href="#" onclick="document.getElementById('pdfViewer').style.display='block'"> Privacy Policy</a>.
+                </p>
+                <button class="btn-primary" onclick="nextSlide(3)">Agree & Continue</button>
+            </div>
+        </section>
+
+        <section id="slide-3" class="slide">
+            <div class="content">
+                <h1>Log <span class="highlight">In.</span></h1>
+                
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="email" placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" id="password" placeholder="Enter your password">
+                    </div>
+                    <a href="#" class="forgot-pass">Forgot Password?</a>
+                    <div class="g-recaptcha" 
+                        data-sitekey="6LcwPGYsAAAAAJM344gXtvBszYY0hIY69zaavxaH" 
+                        data-theme="dark"
+                        style="margin-bottom: 1rem; transform:scale(0.85); transform-origin:0 0;">
+                    </div>
+                    <button type="button" class="btn-primary" onclick="validateLogin()">Log In</button>
+
+                </form>
+            </div>
+        </section>
+
+        <section id="slide-4" class="slide">
+            <div class="content">
+                <h1>Face <span class="highlight">Scan.</span></h1>
+                <p class="description">
+                    Please look at the camera to verify your identity.
+                </p>
+
+                <div class="scanner-wrapper">
+                    <video id="webcam" autoplay playsinline muted></video>
+                    
+                    <div class="scan-overlay">
+                        <div class="scan-line"></div>
+                    </div>
+                </div>
+
+                <p id="scanStatus" style="color: #ccc; font-size: 0.9rem; margin-top: 1.5rem; text-align:center;">
+                    Initializing Camera...
+                </p>
+            </div>
+        </section>
+
+        <div class="pagination-container">
+            <span class="dot active" id="dot-1"></span>
+            <span class="dot" id="dot-2"></span>
+            <span class="dot" id="dot-3"></span>
+        </div>
+
+    </div>
+
+    <script>
+        // --- 1. SLIDER LOGIC (Keep as is) ---
+        function nextSlide(slideNumber) {
+            // 1. Hide all slides
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('slide-' + slideNumber).classList.add('active');
+
+            // 2. Move the Logos (Keep up for Slide 3 & 4)
+            const logos = document.getElementById('logoContainer');
+            if (slideNumber >= 3) logos.classList.add('move-up');
+            else logos.classList.remove('move-up');
+
+            // 3. Handle Dots
+            const pagination = document.querySelector('.pagination-container');
+            
+            if (slideNumber === 4) {
+                // HIDE dots on Face Scan slide
+                pagination.style.display = 'none';
+            } else {
+                // SHOW dots on all other slides
+                pagination.style.display = 'flex';
+                
+                // Update active dot
+                document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
+                const activeDot = document.getElementById('dot-' + slideNumber);
+                if(activeDot) activeDot.classList.add('active');
+            }
+        }
+
+        // --- 2. LOGIN VALIDATION (Keep as is) ---
+        function validateLogin() {
+            var response = grecaptcha.getResponse();
+            if(response.length === 0) {
+                alert("Please check the 'I'm not a robot' box.");
+            } else {
+                nextSlide(4);
+                startRealFaceDetection(); // CALL THE NEW FUNCTION
+            }
+        }
+
+        // --- 3. REAL FACE DETECTION LOGIC ---
+        let detectionInterval; // Variable to stop the scanner later
+
+        async function startRealFaceDetection() {
+            const video = document.getElementById('webcam');
+            const statusText = document.getElementById('scanStatus');
+            const scannerWrapper = document.querySelector('.scanner-wrapper');
+
+            statusText.innerText = "Loading AI Models...";
+
+            // A. LOAD THE AI MODELS (From a public CDN for now)
+            try {
+                await faceapi.nets.tinyFaceDetector.loadFromUri('https://raw.githubusercontent.com/justadudewhohacks/face-api.js/master/weights');
+                // If models load, start camera
+                startCamera();
+            } catch (err) {
+                console.error(err);
+                statusText.innerText = "Error loading AI. Check internet.";
+                statusText.style.color = "red";
+            }
+
+            // B. START CAMERA
+            function startCamera() {
+                navigator.mediaDevices.getUserMedia({ video: {} })
+                    .then(stream => {
+                        video.srcObject = stream;
+                        statusText.innerText = "Looking for a face...";
+                    })
+                    .catch(err => console.error(err));
+            }
+
+            // C. ON VIDEO PLAY -> START DETECTING
+            video.addEventListener('play', () => {
+                const canvas = faceapi.createCanvasFromMedia(video);
+                const displaySize = { width: video.width || 220, height: video.height || 220 };
+                faceapi.matchDimensions(canvas, displaySize);
+
+                let attempts = 0;
+                const maxAttempts = 50; // Roughly 5 seconds (50 * 100ms)
+
+                detectionInterval = setInterval(async () => {
+                    // 1. SCAN FOR FACES
+                    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions());
+                    
+                    if (detections.length > 0) {
+                        // --- FACE DETECTED! ---
+                        clearInterval(detectionInterval); // Stop scanning
+                        
+                        scannerWrapper.style.borderColor = "#00e676"; // Green
+                        statusText.innerText = "Face Detected! Verifying...";
+                        statusText.style.color = "#00e676";
+
+                        // Wait 1 second then success
+                        setTimeout(() => {
+                            alert("Access Granted! (Face Found)");
+                            // Stop Camera
+                            video.srcObject.getTracks().forEach(track => track.stop());
+                            // window.location.href = "dashboard.html"; 
+                        }, 1000);
+
+                    } else {
+                        // --- NO FACE YET ---
+                        attempts++;
+                        statusText.innerText = "Searching... Please look at camera.";
+                        
+                        // IF TIME RUNS OUT (5 Seconds)
+                        if (attempts > maxAttempts) {
+                            clearInterval(detectionInterval); // Stop scanning
+                            
+                            scannerWrapper.style.borderColor = "#ff4444"; // Red
+                            statusText.innerText = "No Face Detected. Try Again.";
+                            statusText.style.color = "#ff4444";
+                            
+                            // Optional: Add a "Retry" button logic here
+                            // For now, reload to try again
+                            setTimeout(() => {
+                                if(confirm("Scan Failed. Try again?")) {
+                                    startRealFaceDetection(); // Restart
+                                }
+                            }, 1000);
+                        }
+                    }
+                }, 100); // Check every 100ms
+            });
+        }
+    </script>
+    
+    <div id="pdfViewer" style="
+        display:none;
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:white;
+        z-index:9999;
+        ">
+    <div style="padding:10px;">
+        <button onclick="document.getElementById('pdfViewer').style.display='none'">
+        Close
+        </button>
+    </div>
+
+        <iframe 
+            src="./src/RIZAL_Terms_and_Privacy.pdf" 
+            width="100%" 
+            height="90%">
+        </iframe>
+    </div>
+</body>
+</html>
