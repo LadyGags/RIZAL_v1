@@ -1,5 +1,10 @@
 /* --- GLOBAL STYLES --- */
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
 
 body {
     background-color: #000000;
@@ -13,85 +18,200 @@ body {
 
 /* --- DYNAMIC BACKGROUND ANIMATION --- */
 .background-wrapper {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    overflow: hidden; z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
 }
+
 .orb {
-    position: absolute; border-radius: 50%;
-    filter: blur(80px); opacity: 0.6;
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
     animation: float 20s infinite ease-in-out alternate;
 }
-.orb-1 { width: 500px; height: 500px; background: #0a1f44; top: -100px; left: -100px; animation-delay: 0s; }
-.orb-2 { width: 400px; height: 400px; background: #1a237e; bottom: -50px; right: -50px; animation-delay: -5s; }
-.orb-3 { width: 300px; height: 300px; background: #ffc107; top: 40%; left: 40%; opacity: 0.15; animation-duration: 25s; }
+
+.orb-1 {
+    width: 500px;
+    height: 500px;
+    background: #0a1f44;
+    top: -100px;
+    left: -100px;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 400px;
+    height: 400px;
+    background: #1a237e;
+    bottom: -50px;
+    right: -50px;
+    animation-delay: -5s;
+}
+
+.orb-3 {
+    width: 300px;
+    height: 300px;
+    background: #ffc107;
+    top: 40%;
+    left: 40%;
+    opacity: 0.15;
+    animation-duration: 25s;
+}
 
 @keyframes float {
-    0% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(30px, 50px) scale(1.1); }
-    100% { transform: translate(-20px, -30px) scale(0.9); }
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(30px, 50px) scale(1.1);
+    }
+
+    100% {
+        transform: translate(-20px, -30px) scale(0.9);
+    }
 }
 
 .app-container {
-    width: 100%; max-width: 400px; height: 100%;
-    position: relative; padding: 2rem;
-    display: flex; flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    height: 100%;
+    position: relative;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     z-index: 10;
 }
 
 /* --- LOGO ANIMATION LOGIC --- */
 .header-logos {
-    position: absolute; left: 1rem;
-    top: 22%; /* Your preferred position */
-    display: flex; gap: 15px;
+    position: absolute;
+    left: 1rem;
+    top: 22%;
+    /* Your preferred position */
+    display: flex;
+    gap: 15px;
     transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
     z-index: 100;
 }
 
 .header-logos.move-up {
-    top: 18%; left: 1rem; transform: scale(0.9);
+    top: 18%;
+    left: 1rem;
+    transform: scale(0.9);
 }
 
-.logo-icon { width: 65px; height: 65px; object-fit: contain; background: transparent; border-radius: 0; }
+.logo-icon {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+    background: transparent;
+    border-radius: 0;
+}
 
 /* --- SLIDES --- */
 .slide {
-    display: none; flex-grow: 1; flex-direction: column;
-    justify-content: center; animation: fadeIn 0.5s ease-in-out;
+    display: none;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    animation: fadeIn 0.5s ease-in-out;
 }
-.slide.active { display: flex; }
+
+.slide.active {
+    display: flex;
+}
 
 /* --- FIX FOR LOGIN SCREEN OVERLAP --- */
-#slide-3 { justify-content: flex-start; padding-top: 180px; }
+#slide-3 {
+    justify-content: flex-start;
+    padding-top: 180px;
+}
 
 /* --- TYPOGRAPHY & BUTTONS --- */
-h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 700; }
-.highlight { color: #ffc107; }
-.description { font-size: 0.9rem; color: #b0b0b0; line-height: 1.5; margin-bottom: 2rem; }
+h1 {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.highlight {
+    color: #ffc107;
+}
+
+.description {
+    font-size: 0.9rem;
+    color: #b0b0b0;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
 
 .btn-primary {
-    width: 100%; padding: 1rem;
+    width: 100%;
+    padding: 1rem;
     background: linear-gradient(90deg, #1a237e, #304ffe);
-    color: white; border: none; border-radius: 20px;
-    font-size: 1rem; font-weight: 600; cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
     box-shadow: 0 4px 15px rgba(48, 79, 254, 0.4);
-    margin-top: auto; margin-bottom: 2rem;
+    margin-top: auto;
+    margin-bottom: 2rem;
 }
 
-.input-group { margin-bottom: 1.2rem; }
-.input-group label { display: block; font-size: 0.8rem; margin-bottom: 0.5rem; color: #ccc; }
+.input-group {
+    margin-bottom: 1.2rem;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    color: #ccc;
+}
+
 .input-group input {
-    width: 100%; padding: 1rem;
+    width: 100%;
+    padding: 1rem;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px; color: white; outline: none;
+    border-radius: 12px;
+    color: white;
+    outline: none;
 }
-.input-group input:focus { border-color: #ffc107; }
-.forgot-pass { display: block; text-align: right; color: #ccc; text-decoration: none; font-size: 0.8rem; margin-bottom: 2rem; }
+
+.input-group input:focus {
+    border-color: #ffc107;
+}
+
+.forgot-pass {
+    display: block;
+    text-align: right;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+}
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* --- 1. THE SLIDING DOTS (Positioned relative to the container bottom) --- */
@@ -99,42 +219,69 @@ h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 70
     position: absolute;
     /* This places the dots EXACTLY above the button area */
     /* 2rem (padding) + 3.5rem (approx button height) + 1rem (gap) */
-    bottom: 22rem; 
-    left: 2.5rem;    
+    bottom: 22rem;
+    left: 2.5rem;
     display: flex;
     gap: 6px;
     z-index: 200;
 }
 
 .dot {
-    width: 8px; height: 8px;
-    background-color: #444; 
+    width: 8px;
+    height: 8px;
+    background-color: #444;
     border-radius: 50%;
     transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .dot.active {
-    width: 30px; 
-    background-color: #4b4eff; 
+    width: 30px;
+    background-color: #4b4eff;
     border-radius: 10px;
 }
 
 /* --- 2. THE BUTTON (Natural Flow) --- */
 .btn-primary {
-    position: relative; /* Keep it in the normal flow */
+    position: relative;
+    /* Keep it in the normal flow */
     width: 100%;
     padding: 1rem;
     background: linear-gradient(90deg, #1a237e, #304ffe);
-    color: white; border: none; border-radius: 20px;
-    font-size: 1rem; font-weight: 600; cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
     box-shadow: 0 4px 15px rgba(48, 79, 254, 0.4);
-    
+
     /* CRITICAL: This pushes the button to the bottom of the available space */
-    margin-top: 2.5rem; 
-    
+    margin-top: 2.5rem;
+
     /* We don't need extra margin-bottom because app-container already has padding */
-    margin-bottom: 0; 
+    margin-bottom: 0;
     z-index: 200;
+}
+
+.btn-secondary {
+    width: 100%;
+    padding: 1rem;
+    background: transparent;
+    color: #b0b0b0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.6rem;
+    transition: all 0.3s ease;
+    z-index: 200;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 193, 7, 0.4);
+    color: #ffc107;
 }
 
 /* --- FACE SCANNER STYLES --- */
@@ -142,10 +289,13 @@ h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 70
     position: relative;
     width: 240px;
     height: 240px;
-    margin: 0 auto; /* Centers it horizontally */
-    border-radius: 50%; /* Makes it a circle */
+    margin: 0 auto;
+    /* Centers it horizontally */
+    border-radius: 50%;
+    /* Makes it a circle */
     border: 4px solid rgba(255, 255, 255, 0.1);
-    overflow: hidden; /* Crops the video to the circle */
+    overflow: hidden;
+    /* Crops the video to the circle */
     box-shadow: 0 0 30px rgba(75, 78, 255, 0.2);
     background: #000;
 }
@@ -153,24 +303,32 @@ h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 70
 #webcam {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures video fills the circle */
-    transform: scaleX(-1); /* Mirrors the image so it feels natural */
+    object-fit: cover;
+    /* Ensures video fills the circle */
+    transform: scaleX(-1);
+    /* Mirrors the image so it feels natural */
 }
 
 /* The Moving Laser Line */
 .scan-overlay {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     z-index: 10;
-    box-shadow: inset 0 0 20px #000; /* Inner shadow for depth */
+    box-shadow: inset 0 0 20px #000;
+    /* Inner shadow for depth */
 }
 
 .scan-line {
     width: 100%;
     height: 4px;
-    background: #4b4eff; /* Blue Laser Color */
-    box-shadow: 0 0 15px #4b4eff; /* Glowing effect */
+    background: #4b4eff;
+    /* Blue Laser Color */
+    box-shadow: 0 0 15px #4b4eff;
+    /* Glowing effect */
     position: absolute;
     top: 0;
     animation: scanMove 2s infinite ease-in-out;
@@ -178,14 +336,335 @@ h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 70
 
 /* Laser Animation Keyframes */
 @keyframes scanMove {
-    0% { top: 0%; opacity: 0; }
-    20% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { top: 100%; opacity: 0; }
+    0% {
+        top: 0%;
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
 }
 
 /* Success State (Green Border) */
 .scanner-wrapper.verified {
-    border-color: #00e676; /* Green */
+    border-color: #00e676;
+    /* Green */
     box-shadow: 0 0 40px rgba(0, 230, 118, 0.4);
+}
+
+/* --- DEVELOPER CREDIT FOOTER --- */
+.dev-credit {
+    position: absolute;
+    bottom: 1.2rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #555;
+    z-index: 200;
+    letter-spacing: 0.5px;
+}
+
+.dev-credit-link {
+    color: #7c7fff;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.dev-credit-link:hover {
+    color: #ffc107;
+    text-shadow: 0 0 8px rgba(255, 193, 7, 0.4);
+}
+
+/* --- DEVELOPER MODAL --- */
+.dev-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.dev-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dev-modal {
+    background: rgba(20, 20, 40, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem 1.8rem;
+    width: 90%;
+    max-width: 360px;
+    position: relative;
+    transform: translateY(20px) scale(0.95);
+    transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(75, 78, 255, 0.1);
+}
+
+.dev-modal-overlay.active .dev-modal {
+    transform: translateY(0) scale(1);
+}
+
+.dev-modal-close {
+    position: absolute;
+    top: 0.8rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.dev-modal-close:hover {
+    color: #fff;
+}
+
+.dev-modal-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: #fff;
+}
+
+.dev-modal-subtitle {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 1.5rem;
+}
+
+/* --- MODAL SLIDER --- */
+.modal-slider {
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    max-height: 360px;
+}
+
+.modal-slide {
+    display: none;
+    animation: fadeSlideIn 0.4s ease-out;
+}
+
+.modal-slide.active {
+    display: block;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* --- SLIDE 1: TEAM BRANDING --- */
+.team-brand {
+    text-align: center;
+    padding: 1.5rem 0.5rem;
+}
+
+.team-logo {
+    font-size: 3rem;
+    margin-bottom: 0.8rem;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.team-name {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-bottom: 0.4rem;
+}
+
+.team-tagline {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 1rem;
+}
+
+.team-divider {
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #4b4eff, #ffc107);
+    border-radius: 2px;
+    margin: 0 auto 1rem;
+}
+
+.team-desc {
+    font-size: 0.8rem;
+    color: #999;
+    line-height: 1.6;
+    max-width: 260px;
+    margin: 0 auto;
+}
+
+/* --- SLIDE 2: MEMBER GRID --- */
+.slide-heading {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.dev-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+}
+
+/* --- GLASS CARDS (Liquid Glass Hover) --- */
+.glass-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: scale(1.04);
+    box-shadow: 0 8px 30px rgba(75, 78, 255, 0.25);
+}
+
+.glass-card-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.2rem 0.6rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.glass-card:hover .glass-card-inner {
+    background: rgba(75, 78, 255, 0.08);
+    border-color: rgba(75, 78, 255, 0.25);
+    box-shadow: inset 0 0 20px rgba(75, 78, 255, 0.05);
+}
+
+.dev-avatar {
+    font-size: 1.8rem;
+    width: 48px;
+    height: 48px;
+    background: rgba(75, 78, 255, 0.15);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    flex-shrink: 0;
+    transition: background 0.3s;
+}
+
+.glass-card:hover .dev-avatar {
+    background: rgba(75, 78, 255, 0.25);
+}
+
+.dev-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #eee;
+    margin-bottom: 0.15rem;
+}
+
+.dev-role {
+    font-size: 0.65rem;
+    color: #777;
+}
+
+/* --- MODAL NAVIGATION --- */
+.modal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.2rem;
+}
+
+.modal-nav-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #aaa;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.modal-nav-btn:hover {
+    background: rgba(75, 78, 255, 0.15);
+    border-color: rgba(75, 78, 255, 0.3);
+    color: #fff;
+}
+
+.modal-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.modal-dot {
+    width: 8px;
+    height: 8px;
+    background: #444;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.modal-dot.active {
+    width: 22px;
+    background: #4b4eff;
+    border-radius: 8px;
 }

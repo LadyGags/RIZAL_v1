@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>R.I.Z.A.L.</title>
-    
+
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    
+
     <link rel="icon" href="./src/assets/icon.png" type="image/png">
     <link rel="stylesheet" href="./src/css/style.css">
     <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 </head>
+
 <body>
     <div class="background-wrapper">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
     </div>
-    
+
     <div class="app-container">
-        
+
         <div class="header-logos" id="logoContainer">
             <img src="./src/assets/icon.png" alt="Logo 1" class="logo-icon">
-            <img src="./src/assets/jrmsu_icon.png" alt="Logo 2" class="logo-icon"> 
+            <img src="./src/assets/jrmsu_icon.png" alt="Logo 2" class="logo-icon">
         </div>
 
         <section id="slide-1" class="slide active">
             <div class="content">
                 <h1>Welcome, <br> <span class="highlight">Illustrados</span></h1>
                 <p class="description">
-                    <span class="highlight">R</span>ecord & <span class="highlight">I</span>ntegrated <span class="highlight">Z</span>one for <span class="highlight">A</span>ttendance & <span class="highlight">L</span>ogging (R.I.Z.A.L.) is designed to simplify your daily attendance monitoring at JRMSU. Track your records and stay informed.
+                    <span class="highlight">R</span>ecord & <span class="highlight">I</span>ntegrated <span
+                        class="highlight">Z</span>one for <span class="highlight">A</span>ttendance & <span
+                        class="highlight">L</span>ogging (R.I.Z.A.L.) is designed to simplify your daily attendance
+                    monitoring at JRMSU. Track your records and stay informed.
                 </p>
                 <button class="btn-primary" onclick="nextSlide(2)">Next</button>
             </div>
@@ -41,7 +46,8 @@
                 <p class="description">
                     By continuing, you confirm that you have read, understood, and agreed to the
                     <a href="#" onclick="document.getElementById('pdfViewer').style.display='block'">
-                    Terms of Service</a> and <a href="#" onclick="document.getElementById('pdfViewer').style.display='block'"> Privacy Policy</a>.
+                        Terms of Service</a> and <a href="#"
+                        onclick="document.getElementById('pdfViewer').style.display='block'"> Privacy Policy</a>.
                 </p>
                 <button class="btn-primary" onclick="nextSlide(3)">Agree & Continue</button>
             </div>
@@ -50,24 +56,23 @@
         <section id="slide-3" class="slide">
             <div class="content">
                 <h1>Log <span class="highlight">In.</span></h1>
-                
+
                 <form id="loginForm">
                     <div class="input-group">
                         <label>Email</label>
                         <input type="email" id="email" placeholder="Enter your email">
                     </div>
-                    
+
                     <div class="input-group">
                         <label>Password</label>
                         <input type="password" id="password" placeholder="Enter your password">
                     </div>
                     <a href="#" class="forgot-pass">Forgot Password?</a>
-                    <div class="g-recaptcha" 
-                        data-sitekey="6LcwPGYsAAAAAJM344gXtvBszYY0hIY69zaavxaH" 
-                        data-theme="dark"
+                    <div class="g-recaptcha" data-sitekey="6LcwPGYsAAAAAJM344gXtvBszYY0hIY69zaavxaH" data-theme="dark"
                         style="margin-bottom: 1rem; transform:scale(0.85); transform-origin:0 0;">
                     </div>
                     <button type="button" class="btn-primary" onclick="validateLogin()">Log In</button>
+                    <button type="button" class="btn-secondary" onclick="createAccount()">Create Account</button>
 
                 </form>
             </div>
@@ -82,7 +87,7 @@
 
                 <div class="scanner-wrapper">
                     <video id="webcam" autoplay playsinline muted></video>
-                    
+
                     <div class="scan-overlay">
                         <div class="scan-line"></div>
                     </div>
@@ -100,7 +105,101 @@
             <span class="dot" id="dot-3"></span>
         </div>
 
+        <!-- Developer Credit -->
+        <div class="dev-credit" id="devCredit">
+            Developed by <span class="dev-credit-link" onclick="openDevModal()">ByteForce</span>
+        </div>
+
     </div>
+
+    <!-- Developer Modal -->
+    <div class="dev-modal-overlay" id="devModalOverlay" onclick="closeDevModal()">
+        <div class="dev-modal" onclick="event.stopPropagation()">
+            <button class="dev-modal-close" onclick="closeDevModal()">&times;</button>
+
+            <!-- Modal Slider -->
+            <div class="modal-slider">
+                <!-- Slide 1: Team Branding -->
+                <div class="modal-slide active" id="modalSlide1">
+                    <div class="team-brand">
+                        <div class="team-logo">⚡</div>
+                        <h2 class="team-name">Byte<span class="highlight">Force</span></h2>
+                        <p class="team-tagline">The people behind R.I.Z.A.L.</p>
+                        <div class="team-divider"></div>
+                        <p class="team-desc">We build smart solutions for modern campuses. Innovation through code.</p>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Member Cards with Liquid Glass -->
+                <div class="modal-slide" id="modalSlide2">
+                    <h3 class="slide-heading">The <span class="highlight">Team</span></h3>
+                    <div class="dev-grid">
+                        <div class="glass-card" data-glass="card1">
+                            <div class="glass-card-inner">
+                                <div class="dev-avatar">👨‍💻</div>
+                                <span class="dev-name">Member 1</span>
+                                <span class="dev-role">Lead Developer</span>
+                            </div>
+                        </div>
+                        <div class="glass-card" data-glass="card2">
+                            <div class="glass-card-inner">
+                                <div class="dev-avatar">👩‍💻</div>
+                                <span class="dev-name">Member 2</span>
+                                <span class="dev-role">Frontend Developer</span>
+                            </div>
+                        </div>
+                        <div class="glass-card" data-glass="card3">
+                            <div class="glass-card-inner">
+                                <div class="dev-avatar">🧑‍💻</div>
+                                <span class="dev-name">Member 3</span>
+                                <span class="dev-role">Backend Developer</span>
+                            </div>
+                        </div>
+                        <div class="glass-card" data-glass="card4">
+                            <div class="glass-card-inner">
+                                <div class="dev-avatar">👨‍🎨</div>
+                                <span class="dev-name">Member 4</span>
+                                <span class="dev-role">UI/UX Designer</span>
+                            </div>
+                        </div>
+                        <div class="glass-card" data-glass="card5">
+                            <div class="glass-card-inner">
+                                <div class="dev-avatar">👩‍🔬</div>
+                                <span class="dev-name">Member 5</span>
+                                <span class="dev-role">QA Tester</span>
+                            </div>
+                        </div>
+                        <div class="glass-card" data-glass="card6">
+                            <div class="glass-card-inner">
+                                <div class="dev-avatar">🧑‍🏫</div>
+                                <span class="dev-name">Member 6</span>
+                                <span class="dev-role">Project Manager</span>
+                            </div>
+                        </div>
+                        <div class="glass-card" data-glass="card7">
+                            <div class="glass-card-inner">
+                                <div class="dev-avatar">👨‍💼</div>
+                                <span class="dev-name">Member 7</span>
+                                <span class="dev-role">Documentation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slider Navigation -->
+            <div class="modal-nav">
+                <button class="modal-nav-btn" onclick="modalSlide(1)">‹</button>
+                <div class="modal-dots">
+                    <span class="modal-dot active" id="modalDot1"></span>
+                    <span class="modal-dot" id="modalDot2"></span>
+                </div>
+                <button class="modal-nav-btn" onclick="modalSlide(2)">›</button>
+            </div>
+        </div>
+    </div>
+
+
 
     <script>
         // --- 1. SLIDER LOGIC (Keep as is) ---
@@ -114,27 +213,30 @@
             if (slideNumber >= 3) logos.classList.add('move-up');
             else logos.classList.remove('move-up');
 
-            // 3. Handle Dots
+            // 3. Handle Dots & Credit
             const pagination = document.querySelector('.pagination-container');
-            
+            const devCredit = document.getElementById('devCredit');
+
             if (slideNumber === 4) {
-                // HIDE dots on Face Scan slide
+                // HIDE dots and credit on Face Scan slide
                 pagination.style.display = 'none';
+                if (devCredit) devCredit.style.display = 'none';
             } else {
-                // SHOW dots on all other slides
+                // SHOW dots and credit on all other slides
                 pagination.style.display = 'flex';
-                
+                if (devCredit) devCredit.style.display = 'block';
+
                 // Update active dot
                 document.querySelectorAll('.dot').forEach(dot => dot.classList.remove('active'));
                 const activeDot = document.getElementById('dot-' + slideNumber);
-                if(activeDot) activeDot.classList.add('active');
+                if (activeDot) activeDot.classList.add('active');
             }
         }
 
         // --- 2. LOGIN VALIDATION (Keep as is) ---
         function validateLogin() {
             var response = grecaptcha.getResponse();
-            if(response.length === 0) {
+            if (response.length === 0) {
                 alert("Please check the 'I'm not a robot' box.");
             } else {
                 nextSlide(4);
@@ -185,11 +287,11 @@
                 detectionInterval = setInterval(async () => {
                     // 1. SCAN FOR FACES
                     const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions());
-                    
+
                     if (detections.length > 0) {
                         // --- FACE DETECTED! ---
                         clearInterval(detectionInterval); // Stop scanning
-                        
+
                         scannerWrapper.style.borderColor = "#00e676"; // Green
                         statusText.innerText = "Face Detected! Verifying...";
                         statusText.style.color = "#00e676";
@@ -206,19 +308,19 @@
                         // --- NO FACE YET ---
                         attempts++;
                         statusText.innerText = "Searching... Please look at camera.";
-                        
+
                         // IF TIME RUNS OUT (5 Seconds)
                         if (attempts > maxAttempts) {
                             clearInterval(detectionInterval); // Stop scanning
-                            
+
                             scannerWrapper.style.borderColor = "#ff4444"; // Red
                             statusText.innerText = "No Face Detected. Try Again.";
                             statusText.style.color = "#ff4444";
-                            
+
                             // Optional: Add a "Retry" button logic here
                             // For now, reload to try again
                             setTimeout(() => {
-                                if(confirm("Scan Failed. Try again?")) {
+                                if (confirm("Scan Failed. Try again?")) {
                                     startRealFaceDetection(); // Restart
                                 }
                             }, 1000);
@@ -227,8 +329,38 @@
                 }, 100); // Check every 100ms
             });
         }
+
+        // --- 4. DEVELOPER MODAL LOGIC ---
+        function openDevModal() {
+            document.getElementById('devModalOverlay').classList.add('active');
+            modalSlide(1); // Reset to slide 1
+        }
+        function closeDevModal() {
+            document.getElementById('devModalOverlay').classList.remove('active');
+        }
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDevModal();
+        });
+
+        // --- 4b. MODAL SLIDER ---
+        function modalSlide(num) {
+            document.querySelectorAll('.modal-slide').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.modal-dot').forEach(d => d.classList.remove('active'));
+            document.getElementById('modalSlide' + num).classList.add('active');
+            document.getElementById('modalDot' + num).classList.add('active');
+        }
+
+
+
+        // --- 5. CREATE ACCOUNT (Backend-ready placeholder) ---
+        function createAccount() {
+            // TODO: Replace with navigation to registration page or API call
+            // Example: window.location.href = "register.html";
+            alert("Create Account page coming soon!");
+        }
     </script>
-    
+
     <div id="pdfViewer" style="
         display:none;
         position:fixed;
@@ -239,17 +371,15 @@
         background:white;
         z-index:9999;
         ">
-    <div style="padding:10px;">
-        <button onclick="document.getElementById('pdfViewer').style.display='none'">
-        Close
-        </button>
-    </div>
+        <div style="padding:10px;">
+            <button onclick="document.getElementById('pdfViewer').style.display='none'">
+                Close
+            </button>
+        </div>
 
-        <iframe 
-            src="./src/RIZAL_Terms_and_Privacy.pdf" 
-            width="100%" 
-            height="90%">
+        <iframe src="./src/RIZAL_Terms_and_Privacy.pdf" width="100%" height="90%">
         </iframe>
     </div>
 </body>
+
 </html>
