@@ -412,12 +412,13 @@ h1 {
 }
 
 .dev-modal {
-    background: rgba(20, 20, 40, 0.85);
+    background: rgba(20, 20, 40, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 2rem 1.8rem;
-    width: 90%;
-    max-width: 360px;
+    width: 92%;
+    max-width: 480px;
+    /* Increased width to fit popups */
     position: relative;
     transform: translateY(20px) scale(0.95);
     transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
@@ -458,33 +459,40 @@ h1 {
     margin-bottom: 1.5rem;
 }
 
-/* --- MODAL SLIDER --- */
-.modal-slider {
+/* --- MODAL CONTENT CONTAINER --- */
+.modal-content-container {
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
-    max-height: 360px;
+    max-height: 420px;
+    padding: 0 20px;
+    /* Added horizontal padding to prevent popup clipping */
 }
 
-.modal-slide {
-    display: none;
-    animation: fadeSlideIn 0.4s ease-out;
+/* Custom Scrollbar */
+.modal-content-container::-webkit-scrollbar {
+    width: 5px;
 }
 
-.modal-slide.active {
-    display: block;
+.modal-content-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
 }
 
-@keyframes fadeSlideIn {
-    from {
-        opacity: 0;
-        transform: translateX(15px);
-    }
+.modal-content-container::-webkit-scrollbar-thumb {
+    background: rgba(75, 78, 255, 0.35);
+    border-radius: 10px;
+    transition: background 0.2s;
+}
 
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.modal-content-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(75, 78, 255, 0.6);
+}
+
+/* Firefox scrollbar */
+.modal-content-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(75, 78, 255, 0.35) rgba(255, 255, 255, 0.03);
 }
 
 /* --- SLIDE 1: TEAM BRANDING --- */
@@ -553,21 +561,29 @@ h1 {
 .dev-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.7rem;
+    gap: 0.9rem;
+    padding-top: 10px;
+    /* Slight top padding */
+    padding-bottom: 240px;
+    /* Extra bottom padding for dropped-down popups */
 }
 
 /* --- GLASS CARDS (Liquid Glass Hover) --- */
 .glass-card {
     position: relative;
     border-radius: 16px;
-    overflow: hidden;
+    /* overflow: hidden; Removed to allow popup outside */
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s linear 0.1s;
+    z-index: 1;
 }
 
 .glass-card:hover {
     transform: scale(1.04);
     box-shadow: 0 8px 30px rgba(75, 78, 255, 0.25);
+    z-index: 100;
+    /* Bring to front */
+    transition-delay: 0s;
 }
 
 .glass-card-inner {
@@ -575,7 +591,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 1.2rem 0.6rem;
+    padding: 1.4rem 0.8rem;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
@@ -591,17 +607,18 @@ h1 {
 }
 
 .dev-avatar {
-    font-size: 1.8rem;
-    width: 48px;
-    height: 48px;
+    font-size: 2.2rem;
+    width: 64px;
+    height: 64px;
     background: rgba(75, 78, 255, 0.15);
-    border-radius: 14px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
     flex-shrink: 0;
     transition: background 0.3s;
+    border: 2px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-card:hover .dev-avatar {
@@ -609,62 +626,148 @@ h1 {
 }
 
 .dev-name {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: #eee;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.2rem;
 }
 
 .dev-role {
+    font-size: 0.7rem;
+    color: #888;
+}
+
+/* --- IMAGE AVATARS --- */
+.dev-avatar.has-img {
+    overflow: hidden;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.dev-avatar.has-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* --- HOVER TEXT PREVIEW (Reverted to Popup) --- */
+.glass-card-inner {
+    position: relative;
+}
+
+.dev-preview {
+    position: absolute;
+    /* Default: Popup ABOVE the card */
+    bottom: 105%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px) scale(0.9);
+    width: 220px;
+    padding: 1rem;
+    background: rgba(18, 18, 30, 0.96);
+    border-radius: 12px;
+    border: 1px solid rgba(75, 78, 255, 0.2);
+    /* Flex content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    /* Visibility */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+    /* Ignore clicks until hovered */
+}
+
+/* Arrow (pointing down by default) */
+.dev-preview::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: rgba(18, 18, 30, 0.96);
+    border-right: 1px solid rgba(75, 78, 255, 0.2);
+    border-bottom: 1px solid rgba(75, 78, 255, 0.2);
+}
+
+/* SMART POSITIONING: Top 2 items popup DOWNwards to avoid clipping */
+.dev-grid .glass-card:nth-child(-n+2) .dev-preview {
+    bottom: auto;
+    top: 105%;
+    transform: translateX(-50%) translateY(-10px) scale(0.9);
+}
+
+/* Adjust arrow for top items (point up) */
+.dev-grid .glass-card:nth-child(-n+2) .dev-preview::after {
+    bottom: auto;
+    top: -6px;
+    border-right: none;
+    border-bottom: none;
+    border-left: 1px solid rgba(75, 78, 255, 0.2);
+    border-top: 1px solid rgba(75, 78, 255, 0.2);
+}
+
+/* Hover State */
+.glass-card:hover .dev-preview {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0) scale(1);
+    pointer-events: auto;
+    /* Enable clicks */
+}
+
+.preview-desc {
+    font-size: 0.75rem;
+    color: #ccc;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.preview-course {
     font-size: 0.65rem;
-    color: #777;
+    color: #888;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
 }
 
-/* --- MODAL NAVIGATION --- */
-.modal-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1.2rem;
-}
-
-.modal-nav-btn {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #aaa;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    font-size: 1.1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.modal-nav-btn:hover {
-    background: rgba(75, 78, 255, 0.15);
-    border-color: rgba(75, 78, 255, 0.3);
+.preview-contact {
+    font-size: 0.75rem;
     color: #fff;
+    text-decoration: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    background: #1877F2;
+    /* Facebook Blue */
+    transition: background 0.2s, transform 0.2s;
+    margin-top: 0.3rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.modal-dots {
-    display: flex;
-    gap: 6px;
+.preview-contact:hover {
+    background: #166fe5;
+    transform: translateY(-2px);
 }
 
-.modal-dot {
-    width: 8px;
-    height: 8px;
-    background: #444;
-    border-radius: 50%;
-    transition: all 0.3s ease;
+.preview-contact.linkedin {
+    background: #0A66C2;
+    /* LinkedIn Blue */
 }
 
-.modal-dot.active {
-    width: 22px;
-    background: #4b4eff;
-    border-radius: 8px;
+.preview-contact.linkedin:hover {
+    background: #004182;
 }

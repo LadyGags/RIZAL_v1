@@ -117,89 +117,181 @@
         <div class="dev-modal" onclick="event.stopPropagation()">
             <button class="dev-modal-close" onclick="closeDevModal()">&times;</button>
 
-            <!-- Modal Slider -->
-            <div class="modal-slider">
-                <!-- Slide 1: Team Branding -->
-                <div class="modal-slide active" id="modalSlide1">
-                    <div class="team-brand">
-                        <div class="team-logo">⚡</div>
-                        <h2 class="team-name">Byte<span class="highlight">Force</span></h2>
-                        <p class="team-tagline">The people behind R.I.Z.A.L.</p>
-                        <div class="team-divider"></div>
-                        <p class="team-desc">We build smart solutions for modern campuses. Innovation through code.</p>
-                    </div>
+            <!-- Single View Content -->
+            <div class="modal-content-container">
+                <!-- Branding -->
+                <div class="team-brand">
+                    <div class="team-logo">⚡</div>
+                    <h2 class="team-name">Byte<span class="highlight">Force</span></h2>
+                    <p class="team-tagline">The people behind R.I.Z.A.L.</p>
+                    <div class="team-divider"></div>
+                    <p class="team-desc">We build smart solutions for modern campuses. Innovation through code.</p>
                 </div>
 
-                <!-- Slide 2: Member Cards with Liquid Glass -->
-                <div class="modal-slide" id="modalSlide2">
-                    <h3 class="slide-heading">The <span class="highlight">Team</span></h3>
-                    <div class="dev-grid">
-                        <div class="glass-card" data-glass="card1">
-                            <div class="glass-card-inner">
-                                <div class="dev-avatar">👨‍💻</div>
-                                <span class="dev-name">Member 1</span>
-                                <span class="dev-role">Lead Developer</span>
+                <!-- Grid -->
+                <h3 class="slide-heading" style="margin-top: 2rem;">The <span class="highlight">Team</span></h3>
+                <div class="dev-grid">
+                    <div class="glass-card has-preview" data-glass="card1">
+                        <div class="glass-card-inner">
+                            <div class="dev-avatar has-img">
+                                <img src="./src/assets/dev/member1.jpg" alt="Developer"
+                                    onerror="this.src='./src/assets/dev/member3.jpg'">
                             </div>
-                        </div>
-                        <div class="glass-card" data-glass="card2">
-                            <div class="glass-card-inner">
-                                <div class="dev-avatar">👩‍💻</div>
-                                <span class="dev-name">Member 2</span>
-                                <span class="dev-role">Frontend Developer</span>
-                            </div>
-                        </div>
-                        <div class="glass-card" data-glass="card3">
-                            <div class="glass-card-inner">
-                                <div class="dev-avatar">🧑‍💻</div>
-                                <span class="dev-name">Member 3</span>
-                                <span class="dev-role">Backend Developer</span>
-                            </div>
-                        </div>
-                        <div class="glass-card" data-glass="card4">
-                            <div class="glass-card-inner">
-                                <div class="dev-avatar">👨‍🎨</div>
-                                <span class="dev-name">Member 4</span>
-                                <span class="dev-role">UI/UX Designer</span>
-                            </div>
-                        </div>
-                        <div class="glass-card" data-glass="card5">
-                            <div class="glass-card-inner">
-                                <div class="dev-avatar">👩‍🔬</div>
-                                <span class="dev-name">Member 5</span>
-                                <span class="dev-role">QA Tester</span>
-                            </div>
-                        </div>
-                        <div class="glass-card" data-glass="card6">
-                            <div class="glass-card-inner">
-                                <div class="dev-avatar">🧑‍🏫</div>
-                                <span class="dev-name">Member 6</span>
-                                <span class="dev-role">Project Manager</span>
-                            </div>
-                        </div>
-                        <div class="glass-card" data-glass="card7">
-                            <div class="glass-card-inner">
-                                <div class="dev-avatar">👨‍💼</div>
-                                <span class="dev-name">Member 7</span>
-                                <span class="dev-role">Documentation</span>
+                            <span class="dev-name">Gabriel Anthony Tolentino</span>
+                            <span class="dev-role">Scrammer</span>
+                            <div class="dev-preview">
+                                <p class="preview-desc">Responsible for facilitating agile processes, removing
+                                    blockers, and ensuring the team delivers efficiently.</p>
+                                <span class="preview-course">BSCPE 2</span>
+                                <a href="https://www.facebook.com/100077976213350/" target="_blank"
+                                    class="preview-contact">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                                    </svg> Facebook
+                                </a>
                             </div>
                         </div>
                     </div>
+                    <div class="glass-card has-preview" data-glass="card2">
+                        <div class="glass-card-inner">
+                            <div class="dev-avatar has-img">
+                                <img src="./src/assets/dev/member2.jpg" alt="Developer"
+                                    onerror="this.src='./src/assets/dev/member3.jpg'">
+                            </div>
+                            <span class="dev-name">Member 2</span>
+                            <span class="dev-role">Project Manager</span>
+                            <div class="dev-preview">
+                                <p class="preview-desc">Responsible for project scheduling, feature prioritization,
+                                    and team coordination to deliver a responsive web application.</p>
+                                <span class="preview-course">BSCPE 2</span>
+                                <a href="https://www.facebook.com" target="_blank" class="preview-contact">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                                    </svg> Facebook
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card has-preview" data-glass="card3">
+                        <div class="glass-card-inner">
+                            <div class="dev-avatar has-img">
+                                <img src="./src/assets/dev/member3.jpg" alt="Developer">
+                            </div>
+                            <span class="dev-name">Gloryzann H. Aclao</span>
+                            <span class="dev-role">Front End Developer</span>
+                            <div class="dev-preview">
+                                <p class="preview-desc">Tasked with crafting responsive user interfaces,
+                                    implementing dynamic interactions, and ensuring a smooth experience across all
+                                    devices.</p>
+                                <span class="preview-course">BSCPE 2</span>
+                                <a href="https://www.linkedin.com/in/gloryzann-aclao-025421366/" target="_blank"
+                                    class="preview-contact linkedin">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z" />
+                                    </svg> LinkedIn
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card has-preview" data-glass="card4">
+                        <div class="glass-card-inner">
+                            <div class="dev-avatar has-img">
+                                <img src="./src/assets/dev/member4.jpg" alt="Developer"
+                                    onerror="this.src='./src/assets/dev/member3.jpg'">
+                            </div>
+                            <span class="dev-name">Member 4</span>
+                            <span class="dev-role">Backend Developer</span>
+                            <div class="dev-preview">
+                                <p class="preview-desc">Responsible for developing and maintaining server-side
+                                    logic, managing database interactions, and ensuring secure data flow across the
+                                    system.</p>
+                                <span class="preview-course">BSCPE 2</span>
+                                <a href="https://www.facebook.com" target="_blank" class="preview-contact">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                                    </svg> Facebook
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card has-preview" data-glass="card5">
+                        <div class="glass-card-inner">
+                            <div class="dev-avatar has-img">
+                                <img src="./src/assets/dev/member5.jpg" alt="Developer"
+                                    onerror="this.src='./src/assets/dev/member3.jpg'">
+                            </div>
+                            <span class="dev-name">Member 5</span>
+                            <span class="dev-role">Asst. Backend Developer</span>
+                            <div class="dev-preview">
+                                <p class="preview-desc">Assists in building APIs, handling data models, and
+                                    supporting the lead backend developer in system architecture decisions.</p>
+                                <span class="preview-course">BSCPE 2</span>
+                                <a href="https://www.facebook.com" target="_blank" class="preview-contact">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                                    </svg> Facebook
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card has-preview" data-glass="card6">
+                        <div class="glass-card-inner">
+                            <div class="dev-avatar has-img">
+                                <img src="./src/assets/dev/member6.jpg" alt="Developer"
+                                    onerror="this.src='./src/assets/dev/member3.jpg'">
+                            </div>
+                            <span class="dev-name">Member 6</span>
+                            <span class="dev-role">QA Tester</span>
+                            <div class="dev-preview">
+                                <p class="preview-desc">Tasked with verifying functionality, identifying UI/UX
+                                    issues, and ensuring a consistent experience across devices and browsers.</p>
+                                <span class="preview-course">BSCPE 2</span>
+                                <a href="https://www.facebook.com" target="_blank" class="preview-contact">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                                    </svg> Facebook
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card has-preview" data-glass="card7">
+                        <div class="glass-card-inner">
+                            <div class="dev-avatar has-img">
+                                <img src="./src/assets/dev/member7.jpg" alt="Developer"
+                                    onerror="this.src='./src/assets/dev/member3.jpg'">
+                            </div>
+                            <span class="dev-name">Member 7</span>
+                            <span class="dev-role">Documentation</span>
+                            <div class="dev-preview">
+                                <p class="preview-desc">Responsible for writing technical documentation, user
+                                    guides, and maintaining project records for future reference.</p>
+                                <span class="preview-course">BSCPE 2</span>
+                                <a href="https://www.facebook.com" target="_blank" class="preview-contact">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                                    </svg> Facebook
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Slider Navigation -->
-            <div class="modal-nav">
-                <button class="modal-nav-btn" onclick="modalSlide(1)">‹</button>
-                <div class="modal-dots">
-                    <span class="modal-dot active" id="modalDot1"></span>
-                    <span class="modal-dot" id="modalDot2"></span>
-                </div>
-                <button class="modal-nav-btn" onclick="modalSlide(2)">›</button>
             </div>
         </div>
     </div>
-
-
 
     <script>
         // --- 1. SLIDER LOGIC (Keep as is) ---
@@ -333,7 +425,8 @@
         // --- 4. DEVELOPER MODAL LOGIC ---
         function openDevModal() {
             document.getElementById('devModalOverlay').classList.add('active');
-            modalSlide(1); // Reset to slide 1
+            // Removed modalSlide(1) since there is no slider anymore
+            // modalSlide(1); 
         }
         function closeDevModal() {
             document.getElementById('devModalOverlay').classList.remove('active');
@@ -343,15 +436,13 @@
             if (e.key === 'Escape') closeDevModal();
         });
 
-        // --- 4b. MODAL SLIDER ---
-        function modalSlide(num) {
-            document.querySelectorAll('.modal-slide').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.modal-dot').forEach(d => d.classList.remove('active'));
-            document.getElementById('modalSlide' + num).classList.add('active');
-            document.getElementById('modalDot' + num).classList.add('active');
-        }
-
-
+        // --- 4b. MODAL SLIDER (REMOVED) ---
+        // function modalSlide(num) {
+        //     document.querySelectorAll('.modal-slide').forEach(s => s.classList.remove('active'));
+        //     document.querySelectorAll('.modal-dot').forEach(d => d.classList.remove('active'));
+        //     document.getElementById('modalSlide' + num).classList.add('active');
+        //     document.getElementById('modalDot' + num).classList.add('active');
+        // }
 
         // --- 5. CREATE ACCOUNT (Backend-ready placeholder) ---
         function createAccount() {
