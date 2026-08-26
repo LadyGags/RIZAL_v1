@@ -23,6 +23,17 @@ class Api {
   static String studentReport(int profileId) =>
       '$prefix/attendance/students/$profileId/report';
 
+  /// Operator-driven manual sign-in / sign-out (campus admin or governance
+  /// member with `manage_attendance`). Body: `{event_id, student_id |
+  /// student_profile_id, notes?}`. Same endpoint handles both directions:
+  /// if the student is already checked in, it records the sign-out.
+  static const String attendanceManual = '$prefix/attendance/manual';
+
+  /// Record sign-out for an existing attendance row by id. Used by the
+  /// inline "Sign out" action in the event monitor.
+  static String attendanceTimeOut(int attendanceId) =>
+      '$prefix/attendance/$attendanceId/time-out';
+
   // Profile
   static const String me = '$prefix/users/me/';
   static String studentProfile(int id) => '$prefix/users/student-profiles/$id';

@@ -162,6 +162,42 @@ class GovernanceRepository {
       (e) => AttendanceRecord.fromJson((e as Map).cast<String, dynamic>()),
     ).data;
   }
+
+  /// Record a manual sign-in for a student at an event. Backend rules:
+  /// admin / campus_admin / governance member with `manage_attendance`.
+  /// If the student is already checked in, the same endpoint records
+  /// the sign-out instead — caller doesn't need to switch endpoints.
+  Future<AttendanceActionResult> markStudentPresent({
+    required int eventId,
+    required String studentNumber,
+    String? notes,
+    String? governanceContext,
+  }) async {
+    final r = await _client.post(
+      Api.attendanceManual,
+      query: {'governance_context': governanceContext},
+      data: {
+        'event_id': eventId,
+        'student_id': studentNumber,
+        if (notes != null && notes.trim().isNotEmpty) 'notes': notes.trim(),
+      },
+    );
+    return AttendanceActionResult.fromJson(
+        (r.data as Map).cast<String, dynamic>());
+  }
+
+  /// Record a sign-out for an existing attendance row.
+  Future<AttendanceActionResult> markStudentSignedOut(
+    int attendanceId, {
+    String? governanceContext,
+  }) async {
+    final r = await _client.post(
+      Api.attendanceTimeOut(attendanceId),
+      query: {'governance_context': governanceContext},
+    );
+    return AttendanceActionResult.fromJson(
+        (r.data as Map).cast<String, dynamic>());
+  }
 }
 
 final governanceRepositoryProvider = Provider<GovernanceRepository>(

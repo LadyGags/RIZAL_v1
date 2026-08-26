@@ -1,7 +1,7 @@
 name: aura_app
 description: "Aura (RIZAL) — school attendance & governance. Flutter client for Android & iOS."
 publish_to: "none"
-version: 1.36.1+2081
+version: 1.36.3+2083
 
 environment:
   sdk: ">=3.4.0 <4.0.0"

@@ -10,6 +10,112 @@ fixes bump the patch, and **1.0.0** lands when all four workspaces ship.
 
 ## [Unreleased]
 
+## [1.36.3] - 2026-05-29
+
+### Highlights — Phase-aware attendee list + tap-to-view-details
+
+- **"Not yet" replaces "Absent" while events are running.** The backend
+  only stamps a `status='absent'` row AFTER finalization (when the
+  sign-out window closes). Before that, students with no record might
+  still arrive. The monitor now reflects backend reality:
+  - Ongoing / upcoming + no record → neutral **"Not yet"** chip with
+    hourglass icon (was incorrectly red "Absent").
+  - Completed + no record → **"Absent"** in red (backend auto-creates
+    these rows lazily on the next read of `/attendees` or `/stats` —
+    see `services/event_attendance_service.py:90`).
+  - Checked in but not signed out → **"Incomplete"** chip
+    (orange), regardless of phase.
+  - The filter pill labelled "Absent" renames to **"Pending"** while
+    the event is ongoing, and its accent tint flips from red to
+    neutral so the pill stops shouting at officers during a live
+    event. Count of pending/absent reflects whichever the phase calls
+    for.
+- **Tap-to-view-details.** Tapping any row opens
+  `AttendeeDetailSheet` — a `DraggableScrollableSheet` with:
+  - Large gradient avatar tinted to the phase-aware status, full
+    name, mono student ID, and a phase pill.
+  - Meta card (program, year level, email).
+  - Attendance card with big mono `CHECK-IN` / `SIGN-OUT` rows,
+    computed duration, recording method ("Face scan" / "Marked by
+    officer" / "Auto-finalized"), and notes (so the backend's
+    `"Auto-marked absent - no sign-in recorded."` shows up
+    verbatim).
+  - Officer action footer (Mark present / Sign out) when permitted
+    and applicable — same handlers as the inline row buttons, so
+    in-flight state stays owned by the monitor.
+  - All read-only: no extra backend calls; uses already-loaded
+    `EventAttendee` + `AttendanceRecord` data.
+- **Chevron + selection haptic** on each row so tap-ability is
+  obvious.
+- New model APIs: `EventAttendee.labelFor(eventStatus)`,
+  `EventAttendee.isPendingFor(eventStatus)`.
+
+## [1.36.2] - 2026-05-28
+
+### Polish pass
+
+- **Typography fixed across the new monitor surface.** Replaced
+  `theme.textTheme.titleMedium` (which doesn't exist in `AppTypography`
+  → fell back to Roboto and looked thin) with explicit Manrope styles
+  via a new `AppTypography.ui()` helper that drives the variable-font
+  weight axis the same way `mono()` and the global `textTheme` do.
+  Avatar initials, filter labels, row names, FAB and action buttons
+  now all render in proper Manrope weights.
+- **Sliding filter indicator.** The All · Present · Late · Absent
+  segmented control now slides a single `AnimatedPositioned` pill
+  between cells (260 ms, custom ease-out) and tints the active label
+  + count badge with the status colour (green / orange / red /
+  ink). Replaces the per-cell background swap that fought the eye.
+- **Real motion on rows + buttons.** First-mount fade + 6%-lift on
+  each attendee row (40 ms stagger, capped at 8 cells); 0.985 press
+  scale on the whole row, on the FAB, and on inline action buttons;
+  `HapticFeedback.selectionClick` on tap. All paths respect
+  `MediaQuery.disableAnimations`.
+- **Search field with focus halo.** Border + fill swap to surface +
+  accent on focus, with a soft accent shadow underneath; icon tints
+  accent on focus.
+- **Absent never lies.** `EventAttendee.effectiveStatus` now returns
+  `'incomplete'` (or `'present'` when both windows are recorded)
+  whenever there's a `timeIn` — a student who has checked in but
+  not yet signed out is never painted as **Absent**, regardless of
+  what the backend's `display_status` happens to say while the event
+  is still running.
+
+### Highlights — Manual attendance + searchable roster
+
+- **Mark students present without face scan.** The governance event
+  monitor (`GovernanceEventMonitorScreen`) gains an "Add attendance"
+  floating action and per-row "Mark present" / "Sign out" buttons —
+  gated on the officer's `manage_attendance` permission. Calls
+  `POST /api/attendance/manual` (which auto-detects sign-in vs sign-out)
+  and `POST /api/attendance/{id}/time-out`, both with the unit-typed
+  `governance_context` query. Mid-impact haptic confirms each action;
+  the stats card, attendee list, and absent-roster all refetch
+  automatically. Backend already supported this; the Flutter UI didn't
+  expose it.
+- **Searchable, named attendee list.** Replaces the old
+  "Student #142" plain rows with a roster joined client-side from
+  `/api/events/{id}/attendees` × `/api/governance/students`. Each row
+  shows initials avatar (status-tinted: green / orange / red /
+  neutral), full name, mono student-ID, time-in + time-out pills,
+  status chip. Above the list: segmented filter pills **All ·
+  Present · Late · Absent** with mono count badges, plus a search
+  field matching name, student ID, or email (case-insensitive). The
+  empty-state copy adapts to the active filter ("Everyone is
+  accounted for" when Absent is empty).
+- **Smart-poll for the monitor.** `eventAttendeesProvider` now
+  subscribes to `livePollingTickerProvider(PollingPace.fast)` so the
+  list reflects new check-ins without a manual pull-to-refresh.
+- **New models / providers.** `EventAttendee` joins
+  `AttendanceRecord` + roster info with `effectiveStatus` /
+  `needsSignOut` / `canMarkPresent` / `matchesQuery`.
+  `AttendanceActionResult` decodes both manual-attendance endpoints.
+  `GovUserSummary` parses `studentProfileId` so the FK on
+  `attendances.student_id` (= `student_profiles.id`, **not**
+  `User.id`) resolves cleanly. New providers:
+  `governanceStudentsProvider`, `eventAttendeesEnrichedProvider(id)`,
+  `eventAbsentStudentsProvider(id)`.
+
 ## [1.36.1] - 2026-05-28
 
 ### Highlights (what changed since v1.36.0+80)

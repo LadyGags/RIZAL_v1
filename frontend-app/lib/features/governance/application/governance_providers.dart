@@ -156,7 +156,103 @@ final eventLiveStatsProvider =
 
 final eventAttendeesProvider = FutureProvider.autoDispose
     .family<List<AttendanceRecord>, int>((ref, eventId) {
+  ref.watch(livePollingTickerProvider(PollingPace.fast));
   return ref.watch(governanceRepositoryProvider).eventAttendees(eventId);
+});
+
+/// Roster of students the active officer can see. The attendees endpoint
+/// only returns FK ints — this list provides the names/IDs we need to
+/// label rows and to compute "absent" = roster MINUS attended.
+final governanceStudentsProvider =
+    FutureProvider.autoDispose<List<GovUserSummary>>((ref) async {
+  final unit = ref.watch(effectiveUnitProvider);
+  return ref
+      .watch(governanceRepositoryProvider)
+      .accessibleStudents(context: unit?.type);
+});
+
+/// Joined `EventAttendee` rows for the monitor screen: every roster student
+/// gets a row, with their attendance record attached if one exists.
+/// Sorted with present/late first (most recent time-in), then absent
+/// (alphabetical by full name).
+final eventAttendeesEnrichedProvider = FutureProvider.autoDispose
+    .family<List<EventAttendee>, int>((ref, eventId) async {
+  final attendees = await ref.watch(eventAttendeesProvider(eventId).future);
+  final students = await ref.watch(governanceStudentsProvider.future);
+
+  // Index attendance rows by student_profile.id (the FK on attendances).
+  final byProfileId = <int, AttendanceRecord>{};
+  for (final a in attendees) {
+    final pid = a.studentId;
+    if (pid != null) byProfileId[pid] = a;
+  }
+
+  final rows = <EventAttendee>[];
+  final usedAttendanceIds = <int>{};
+
+  for (final s in students) {
+    final profileId = s.studentProfileId;
+    if (profileId == null) continue; // not a student account
+    final rec = byProfileId[profileId];
+    if (rec != null) usedAttendanceIds.add(rec.id);
+    rows.add(EventAttendee(
+      record: rec,
+      studentProfileId: profileId,
+      studentNumber: s.studentNumber,
+      fullName: s.displayName,
+      email: s.email,
+      programName: s.programName,
+      yearLevel: s.yearLevel,
+    ));
+  }
+
+  // Surface any attendance rows that don't map to a roster student
+  // (e.g. visitor / cross-college guest) so they're not invisible.
+  for (final a in attendees) {
+    if (usedAttendanceIds.contains(a.id)) continue;
+    final pid = a.studentId ?? 0;
+    rows.add(EventAttendee(
+      record: a,
+      studentProfileId: pid,
+      studentNumber: null,
+      fullName: 'Student #$pid',
+    ));
+  }
+
+  rows.sort((a, b) {
+    // Order: present (signed in) > present (completed) > late > absent.
+    int rank(EventAttendee e) {
+      if (e.isAbsent) return 3;
+      if (e.isLate) return 2;
+      if (e.needsSignOut) return 0;
+      return 1;
+    }
+
+    final ra = rank(a);
+    final rb = rank(b);
+    if (ra != rb) return ra.compareTo(rb);
+    // Within attended rows, newest time-in first; within absent, A→Z by name.
+    if (ra == 3) {
+      return a.fullName.toLowerCase().compareTo(b.fullName.toLowerCase());
+    }
+    final at = a.record?.timeIn;
+    final bt = b.record?.timeIn;
+    if (at == null && bt == null) return 0;
+    if (at == null) return 1;
+    if (bt == null) return -1;
+    return bt.compareTo(at);
+  });
+
+  return rows;
+});
+
+/// Convenience: the roster students who do NOT have an attendance row yet
+/// — the candidate set for the "Add attendance" picker so officers don't
+/// re-mark someone already checked in.
+final eventAbsentStudentsProvider = FutureProvider.autoDispose
+    .family<List<EventAttendee>, int>((ref, eventId) async {
+  final rows = await ref.watch(eventAttendeesEnrichedProvider(eventId).future);
+  return rows.where((e) => e.isAbsent).toList();
 });
 
 final sanctionsDashboardProvider =

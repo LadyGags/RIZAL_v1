@@ -126,6 +126,7 @@ class GovUserSummary {
     this.firstName,
     this.lastName,
     this.studentNumber,
+    this.studentProfileId,
     this.programName,
     this.departmentName,
     this.yearLevel,
@@ -135,6 +136,12 @@ class GovUserSummary {
   final String? firstName;
   final String? lastName;
   final String? studentNumber;
+
+  /// FK on `attendances.student_id` points at `student_profiles.id`, which
+  /// is **not** `User.id`. Holding it here makes the client-side join with
+  /// the event-attendees list a one-liner instead of a multi-hop lookup.
+  final int? studentProfileId;
+
   final String? programName;
   final String? departmentName;
   final int? yearLevel;
@@ -164,6 +171,7 @@ class GovUserSummary {
       firstName: asStr(j['first_name']),
       lastName: asStr(j['last_name']),
       studentNumber: asStr(p['student_id']),
+      studentProfileId: asInt(p['id']),
       programName: asStr(p['program_name']),
       departmentName: asStr(p['department_name']),
       yearLevel: asInt(p['year_level']),

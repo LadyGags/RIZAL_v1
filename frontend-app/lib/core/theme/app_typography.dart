@@ -51,4 +51,24 @@ class AppTypography {
         color: color,
         fontFeatures: _tnum,
       );
+
+  /// Manrope **UI** text — for anywhere a custom widget composes its own
+  /// label/heading instead of using `textTheme`. Drives the variable-font
+  /// weight axis (Manrope renders thin without `fontVariations`).
+  static TextStyle ui({
+    double size = 14,
+    FontWeight weight = FontWeight.w500,
+    Color? color,
+    double? letterSpacing,
+    double? height,
+  }) =>
+      TextStyle(
+        fontFamily: fontFamily,
+        fontSize: size,
+        fontWeight: weight,
+        fontVariations: [FontVariation('wght', weight.value.toDouble())],
+        color: color,
+        letterSpacing: letterSpacing,
+        height: height,
+      );
 }
